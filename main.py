@@ -15,10 +15,16 @@ TEXT = (
 
 
 def main() -> None:
+    # Validate the judged text before writing: it must stay exactly the
+    # 165-character kettle text the entry was built around.
+    assert len(TEXT) == 165, f"unexpected entry length: {len(TEXT)}"
+    assert TEXT.strip(), "entry text must not be empty"
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
+    out_path = os.path.join(out_dir, "entry.txt")
+    with open(out_path, "w", encoding="utf-8") as f:
         f.write(TEXT)
+    print(f"Wrote {len(TEXT)} characters to {out_path}")
 
 
 if __name__ == "__main__":
